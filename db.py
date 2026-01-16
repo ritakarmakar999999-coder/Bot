@@ -38,10 +38,7 @@ class Database:
                 print(f"{Fore.YELLOW}⌛ Attempt {attempt}/{max_retries}: Connecting to MongoDB...{Style.RESET_ALL}")
                 
                                 # Enhanced connection parameters
-                # db.py ফাইলের ৪১ নম্বর লাইনের পর থেকে পরিবর্তনটি এমন হবে:
-
-        # Enhanced connection parameters
-        try:
+                        try:
             self.client = MongoClient(
                 MONGO_URL,
                 serverSelectionTimeoutMS=20000,
@@ -51,6 +48,11 @@ class Database:
                 retryWrites=True,
                 retryReads=True
             )
+            self.client.server_info() # কানেকশন টেস্ট করার জন্য
+        except Exception as e:
+            print(f"MongoDB Connection Failed: {e}")
+            raise e
+            
             # Test connection
             self.client.server_info()
         except Exception as e:
