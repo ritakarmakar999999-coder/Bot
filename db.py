@@ -40,15 +40,22 @@ class Database:
                                 # Enhanced connection parameters
                 # db.py ফাইলের ৪১ নম্বর লাইনের পর থেকে পরিবর্তনটি এমন হবে:
 
-self.client = MongoClient(
-    MONGO_URL,
-    serverSelectionTimeoutMS=20000,
-    connectTimeoutMS=20000,
-    socketTimeoutMS=30000,
-    tlsCAFile=certifi.where(),  # <--- এই লাইনটি এখানে যোগ করুন
-    retryWrites=True,
-    retryReads=True
-)
+        # Enhanced connection parameters
+        try:
+            self.client = MongoClient(
+                MONGO_URL,
+                serverSelectionTimeoutMS=20000,
+                connectTimeoutMS=20000,
+                socketTimeoutMS=30000,
+                tlsCAFile=certifi.where(),
+                retryWrites=True,
+                retryReads=True
+            )
+            # Test connection
+            self.client.server_info()
+        except Exception as e:
+            print(f"Connection failed: {e}")
+            raise e
 
 
 
