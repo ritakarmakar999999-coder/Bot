@@ -5,6 +5,7 @@ from pymongo import MongoClient, errors
 from pymongo.database import Database as MongoDatabase
 from pymongo.collection import Collection
 from vars import *
+MONGO_URL = os.environ.get("MONGO_URL")
 import colorama
 from colorama import Fore, Style
 import time
