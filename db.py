@@ -38,13 +38,18 @@ class Database:
                 print(f"{Fore.YELLOW}⌛ Attempt {attempt}/{max_retries}: Connecting to MongoDB...{Style.RESET_ALL}")
                 
                                 # Enhanced connection parameters
-                self.client = MongoClient(
-                    MONGO_URL,
-                    tlsCAFile=certifi.where(),  # এটি SSL হ্যান্ডশেক এরর সমাধান করবে
-                    serverSelectionTimeoutMS=20000,
-                    connectTimeoutMS=20000,
-                    retryWrites=True
-                )
+                # db.py ফাইলের ৪১ নম্বর লাইনের পর থেকে পরিবর্তনটি এমন হবে:
+
+self.client = MongoClient(
+    MONGO_URL,
+    serverSelectionTimeoutMS=20000,
+    connectTimeoutMS=20000,
+    socketTimeoutMS=30000,
+    tlsCAFile=certifi.where(),  # <--- এই লাইনটি এখানে যোগ করুন
+    retryWrites=True,
+    retryReads=True
+)
+
 
 
                 
