@@ -81,6 +81,14 @@ class Database:
             return False
         expiry = user['expiry_date']
         if isinstance(expiry, str):
+            
+# ☁ Final Initialization
+try:
+    db = Database()
+except Exception as e:
+    print(f"Fatal Error: {e}")
+    raise
+    
             expiry = datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S")
         return expiry > datetime.now()
 
