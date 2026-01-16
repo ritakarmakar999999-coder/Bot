@@ -1,111 +1,97 @@
 from flask import Flask
+import os
+from vars import BOT_USERNAME  # vars.py থেকে বটের নাম নিয়ে আসবে
+
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return """
+    # এখানে আপনার বটের ইউজারনেম ব্যবহার করা হয়েছে
+    display_name = "@MyMyMyMyisnothingbhaibot"
+    return f"""
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SudoR2spr Repository</title>
-    <link rel="icon" type="image/x-icon" href="https://tinypic.host/images/2025/02/07/DeWatermark.ai_1738952933236-1.png">
-    <!-- Bootstrap CSS -->
+    <title>{display_name} - Authorized Access</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+        body {{
+            background: linear-gradient(135deg, #050505, #111111);
             color: #fff;
             font-family: 'Courier New', monospace;
             text-align: center;
             padding-top: 50px;
-        }
-        .ascii-art {
-            font-size: 14px;
-            color: #0ff;
+        }}
+        .ascii-art {{
+            font-size: 12px;
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
             transition: transform 0.3s ease;
-        }
-        .ascii-art:hover {
-            transform: scale(1.1);
-            color: #ff0066;
-        }
-        .thanos {
-            font-size: 40px;
+        }}
+        .bot-title {{
+            font-size: 35px;
             font-weight: bold;
-            color: #ffcc00;
-            display: inline-block;
-            cursor: pointer;
-        }
-        footer {
-            margin-top: 80px;
-            padding: 20px;
-            background: #111;
-        }
-        footer img {
-            border-radius: 50%;
-        }
-        /* Thanos effect keyframes */
-        @keyframes vanish {
-            0% { opacity: 1; transform: translate(0,0) rotate(0); }
-            50% { opacity: 0.5; transform: translate(20px,-20px) rotate(20deg); }
-            100% { opacity: 0; transform: translate(-50px,50px) rotate(-90deg); }
-        }
-        .disintegrate span {
-            display: inline-block;
-            animation: vanish 1s forwards;
-        }
+            color: #ff3366;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }}
+        .status-badge {{
+            background-color: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }}
+        footer {{
+            margin-top: 100px;
+            padding: 30px;
+            background: #000;
+            border-top: 1px solid #333;
+        }}
+        .owner-credit {{
+            color: #888;
+            font-size: 13px;
+        }}
     </style>
 </head>
 
 <body>
     <div class="container">
-        <a href="https://github.com/DevThanos" class="text-decoration-none text-light">
-            <pre class="ascii-art">
-            
-████████╗██╗  ██╗ █████╗ ███╗   ██╗ ██████╗ ███████╗
-╚══██╔══╝██║  ██║██╔══██╗████╗  ██║██╔═══██╗██╔════╝
-   ██║   ███████║███████║██╔██╗ ██║██║   ██║███████╗
-   ██║   ██╔══██║██╔══██║██║╚██╗██║██║   ██║╚════██║
-   ██║   ██║  ██║██║  ██║██║ ╚████║╚██████╔╝███████║
-   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
-            </pre>
-        </a>
+        <pre class="ascii-art">
+  __  __         __  __         __  __         ____   ____  _______ 
+ |  \/  |       |  \/  |       |  \/  |       |  _ \ / __ \|__   __|
+ | \  / |_   _  | \  / |_   _  | \  / |_   _  | |_) | |  | |  | |   
+ | |\/| | | | | | |\/| | | | | | |\/| | | | | |  _ <| |  | |  | |   
+ | |  | | |_| | | |  | | |_| | | |  | | |_| | | |_) | |__| |  | |   
+ |_|  |_|\__, | |_|  |_|\__, | |_|  |_|\__, | |____/ \____/   |_|   
+          __/ |          __/ |          __/ |                       
+         |___/          |___/          |___/                        
+        </pre>
 
-        <h1 id="saini" class="thanos">Thanos™</h1>
-        <p><b>v2.0.0</b></p>
+        <h1 class="bot-title">{display_name}</h1>
+        <div class="mt-3">
+            <span class="status-badge">System Online</span>
+        </div>
+        <p class="mt-4">Authorized Link Downloader Bot Engine v2.0.0</p>
     </div>
 
     <footer>
         <center>
-            <img src="https://files.catbox.moe/ui41xs.jpg" width="40" height="40">
-            Powered By Thanos 
-            <img src="https://files.catbox.moe/ui41xs.jpg" width="40" height="40">
-            <div class="footer__copyright">
-                <p>© 2025 TXT Links Downloader.</p>
+            <div class="owner-credit">
+                <p>© 2026 <b>@MyMyMyMyisnothingbhaibot</b> | All Rights Reserved.</p>
+                <p>Powered by Your Private Server</p>
             </div>
         </center>
     </footer>
-
-    <script>
-        // Thanos Disintegration effect
-        const text = document.getElementById("saini");
-        text.addEventListener("click", () => {
-            const letters = text.innerText.split("");
-            text.innerHTML = "";
-            letters.forEach((letter, i) => {
-                const span = document.createElement("span");
-                span.innerText = letter;
-                span.style.animationDelay = (i * 0.1) + "s";
-                span.classList.add("disintegrate");
-                text.appendChild(span);
-            });
-        });
-    </script>
 </body>
 </html>
 """
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Render-এর জন্য সঠিক পোর্ট ব্যবহার করা হয়েছে
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
