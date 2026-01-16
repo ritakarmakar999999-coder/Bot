@@ -1,8 +1,5 @@
 <div align="center">
-![NATH BOT BANNER](https://github.com/user-attachments/assets/c60e2ad3-6e3f-4f03-b407-d6a7899dd51d)
-
-# 🤖 @MyMyMyMyisnothingbhaibot
-">
+  <img src="https://github.com/user-attachments/assets/c60e2ad3-6e3f-4f03-b407-d6a7899dd51d" width="100%" alt="NATH BOT BANNER">
   
   <h1>🤖 @MyMyMyMyisnothingbhaibot</h1>
   
