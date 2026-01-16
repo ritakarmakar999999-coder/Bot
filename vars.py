@@ -25,3 +25,5 @@ AUTH_MESSAGES = {
     "subscription_expired": "<b>⚠️ Your Subscription Has Ended</b>",
     "access_denied": "<b>⚠️ Access Denied!</b>"
 }
+CREDIT = "NATH"
+
