@@ -57,11 +57,11 @@ from pyrogram.errors import (
 from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
 
 # 🧠 Bot Modules
+# 🧠 Bot Modules
 import auth
-import itsgolu as helper
+import nath as helper
 from html_handler import html_handler
-from itsgolu import *
-
+from nath import *
 from clean import register_clean_handler
 from logs import logging
 from utils import progress_bar
