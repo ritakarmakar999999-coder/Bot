@@ -21,14 +21,13 @@ import pytz
 from flask import Flask
 from threading import Thread
 
-web_server = Flask('') # Flask-এর নাম পরিবর্তন করে web_server রাখা হলো
+web_server = Flask('')
 
 @web_server.route('/')
 def home():
     return "Bot is alive!"
 
 def run():
-    # Render-এর জন্য সঠিক পোর্ট কনফিগারেশন
     port = int(os.environ.get("PORT", 8080))
     web_server.run(host='0.0.0.0', port=port)
 
@@ -63,44 +62,35 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InputMediaPhoto
 )
-from pyrogram.errors import (
-    FloodWait,
-    BadRequest,
-    Unauthorized,
-    SessionExpired,
-    AuthKeyDuplicated,
-    AuthKeyUnregistered,
-    ChatAdminRequired,
-    PeerIdInvalid,
-    RPCError
-)
-from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
+# ... অন্যান্য ইম্পোর্ট ...
 
 # 🧠 Bot Modules
 import auth
 import nath as helper
 from html_handler import html_handler
 from nath import *
-from clean import register_clean_handler
-from logs import logging
-from utils import progress_bar
 from vars import *
 
-# Pyromod fix
-import pyromod
-from db import db
+# 🤖 Pyrogram Client Setup (এটি আপনার কোডে অবশ্যই থাকতে হবে)
+# এখানে vars.py থেকে ভেরিয়েবলগুলো অটোমেটিক আসবে অথবা ম্যানুয়ালি বসান
+app = Client(
+    "Bot-1",
+    api_id=API_ID, 
+    api_hash=API_HASH, 
+    bot_token=BOT_TOKEN
+)
 
-# -------------------------------------------------------------------------
-# আপনার বোটের বাকি সব কমান্ড এবং ফাংশনগুলো এখানে থাকবে
-# (যেমন: @app.on_message ইত্যাদি)
-# -------------------------------------------------------------------------
+# 🛑 Stop Command (অ্যাডমিনের জন্য)
+@app.on_message(filters.command("stop") & filters.user(7110188686))
+async def stop_bot(client, message):
+    await message.reply_text("**বোটটি সফলভাবে বন্ধ করা হয়েছে।** 🛑")
+    os._exit(0)
 
 # 🚀 Bot Start [সংশোধিত এবং চূড়ান্ত অংশ]
 if __name__ == "__main__":
     print("Starting Keep Alive Web Server...")
-    keep_alive() # Flask ওয়েব সার্ভার চালু করবে
+    keep_alive() #
     
     print("Starting Pyrogram Bot...")
-    # এখানে 'app' হলো আপনার Pyrogram Client-এর অবজেক্ট
-    # এটি বোটকে সচল রাখবে
-    app.run() #
+    # এখানে 'app.run()' এর শেষে কোনো বাড়তি অক্ষর রাখবেন না
+    app.run() 
