@@ -98,8 +98,35 @@ async def stop_bot(client, message):
 if __name__ == "__main__":
     print("Starting Keep Alive Web Server...")
     keep_alive()
-    
     print("Starting @MyMyMyMyisnothingbhaibot...")
     # এখানে 'app' ব্যবহার করা হয়েছে যাতে NameError না আসে
     # নিশ্চিত করুন শেষে কোনো বাড়তি অক্ষর নেই
     app.run() 
+    # ... (ইম্পোর্টগুলো আগের মতোই থাকবে) ...
+
+# 🤖 Pyrogram Client Setup
+app = Client(
+    "MyPrivateBot",
+    api_id=24670806,
+    api_hash="82134723a32b2cae76b9cfb3b1570745",
+    bot_token="8479840767:AAGU9pgJvC1iTQKXOKeMBPuuQgnLmoqRi9I",
+    plugins=dict(root="plugins") # যদি আপনার সব কমান্ড 'plugins' ফোল্ডারে থাকে
+)
+
+# অথবা যদি কমান্ডগুলো সরাসরি অন্য ফাইল থেকে আসে:
+# register_handlers(app) # আপনার বোটের ধরন অনুযায়ী এটি প্রয়োজন হতে পারে
+
+# 🛑 স্টপ কমান্ড (আপনার আইডি ৮২২৯২২৮৬১৬)
+@app.on_message(filters.command("stop") & filters.user(8229228616))
+async def stop_bot(client, message):
+    await message.reply_text("**বোটটি সফলভাবে বন্ধ করা হয়েছে।** 🛑")
+    os._exit(0)
+
+# 🚀 Bot Start
+if __name__ == "__main__":
+    print("Starting Keep Alive Web Server...")
+    keep_alive() # নিশ্চিত করুন এখানে বাড়তি কোনো অক্ষর নেই
+    
+    print("Starting @MyMyMyMyisnothingbhaibot...")
+    app.run() 
+    
