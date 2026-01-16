@@ -1,7 +1,7 @@
 import random
 import time
 from pyrogram.errors import FloodWait
-from vars import CREDIT
+from vars import CREDIT, BOT_USERNAME  # আপনার ব্র্যান্ডিং ব্যবহারের জন্য
 
 class Timer:
     def __init__(self, time_between=5):
@@ -65,66 +65,36 @@ async def progress_bar(current, total, reply, start):
     if elapsed < 1:
         return
 
+    # স্পিড ক্যালকুলেশন
     base_speed = current / elapsed
-    speed = base_speed + (9 * 1024 * 1024)  # +9 MB/s
+    speed = base_speed + (5 * 1024 * 1024)  # ৫ MB/s বুস্ট দেখানো হয়েছে
 
     percent = (current / total) * 100
     eta_seconds = (total - current) / speed if speed > 0 else 0
 
-    bar_length = 12
-
-    # Calculate how many blocks filled (float for smoothness)
+    # স্টাইলিশ প্রোগ্রেস বার লজিক
+    bar_length = 10
     progress_ratio = current / total
-    filled_length = progress_ratio * bar_length
+    filled_length = int(progress_ratio * bar_length)
+    
+    # নতুন ইমোজি ভিত্তিক বার (সবুজ এবং কালো সংমিশ্রণ)
+    bar = "🟩" * filled_length + "⬛" * (bar_length - filled_length)
 
-    progress_bar_list = []
-
-    for i in range(bar_length):
-        # Position index in bar (0-based)
-        pos = i + 1
-
-        if pos <= int(filled_length):
-            # Fully filled block — decide green or orange
-            # If in last 30% of progress, make green
-            if progress_ratio > 0.7:
-                # The left part turns green from 70% progress onwards
-                progress_bar_list.append("🔳")
-            else:
-                # Between 0 and 70% progress filled blocks are orange
-                progress_bar_list.append("🔲")
-        elif pos - 1 < filled_length < pos:
-            # Partial fill (between blocks), show orange as partial progress
-            progress_bar_list.append("◻️")
-        else:
-            # Not filled yet, show white block
-            progress_bar_list.append("◻️")
-
-    # Extra tweak: if progress > 90%, all filled blocks green
-    if progress_ratio >= 0.9:
-        for i in range(int(filled_length)):
-            progress_bar_list[i] = "◻️"
-
-    progress_bar_str = "".join(progress_bar_list)
-
+    # আপনার বটের ব্র্যান্ডিং সহ প্রোগ্রেস বার মেসেজ
     msg = (
-        f"╭───⌯═════ 𝐁𝐎𝐓 𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒 ═════⌯\n"
-        f"├  **{percent:.1f}%** `{progress_bar_str}`\n├\n"
-        f"├ 🛜  𝗦𝗣𝗘𝗘𝗗 ➤ | {hrb(speed)}/s \n"
-        f"├ ♻️  𝗣𝗥𝗢𝗖𝗘𝗦𝗦𝗘𝗗 ➤ | {hrb(current)} \n"
-        f"├ 📦  𝗦𝗜𝗭𝗘 ➤ | {hrb(total)} \n"
-        f"├ ⏰  𝗘𝗧𝗔 ➤ | {hrt(eta_seconds, 1)}\n\n"
-        f"╰─═══ ** 𝐈𝐓'𝐬𝐆𝐎𝐋𝐔 **═══─╯"
+        f"╭───⌯═════ 𝐏𝐑𝐎𝐆𝐑𝐄𝐒𝐒 ═════⌯\n"
+        f"├ 📊 **{percent:.1f}%** `|{bar}|` \n"
+        f"├\n"
+        f"├ 📶 **স্পিড:** `{hrb(speed)}/s` \n"
+        f"├ 🔄 **প্রসেসড:** `{hrb(current)}` \n"
+        f"├ 📦 **মোট সাইজ:** `{hrb(total)}` \n"
+        f"├ ⏳ **সময় বাকি:** `{hrt(eta_seconds, 1)}` \n\n"
+        f"╰──═══ ** {CREDIT} ** ═══──╯"
     )
 
     try:
         await reply.edit(msg)
     except FloodWait as e:
         time.sleep(e.x)
-
-
-
-
-
-
-
-
+    except Exception as e:
+        print(f"Error editing progress: {e}")
