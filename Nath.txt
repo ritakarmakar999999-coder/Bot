@@ -1,11 +1,12 @@
-# pyrogram==2.0.106
+# --- MyPrivateBot Requirements ---
+# Core Telegram Bot Framework
 pyrofork==2.2.11
 tgcrypto==1.2.5
 pyromod==1.5.0
 pysocks==1.7.1
 asyncio
 
-# HTTP & scraping
+# HTTP & Scraping
 requests==2.31.0
 cloudscraper
 aiohttp
@@ -24,7 +25,7 @@ cryptography==42.0.5
 pyopenssl==24.1.0
 PyJWT==2.8.0
 
-# Video / Media
+# Video / Media Processing
 yt-dlp==2025.06.30
 mutagen==1.46.0
 ffmpeg-python==0.2.0
@@ -33,21 +34,20 @@ m3u8==6.0.0
 pytube==15.0.0
 wget==3.2
 
-# Database & Caching
+# Database Connectivity
 motor
 pymongo
 umongo
 sqlalchemy
 async-lru==2.0.2
-certifi
 
-# Flask App (optional if using webhook/server)
+# Server & Web Service (Render Compatibility)
 Flask
 gunicorn
 itsdangerous
 
-
-# Others
+# Utilities
 pytz
 colorama
 reportlab
+python-dotenv
