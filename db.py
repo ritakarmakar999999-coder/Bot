@@ -38,15 +38,15 @@ class Database:
                 print(f"{Fore.YELLOW}⌛ Attempt {attempt}/{max_retries}: Connecting to MongoDB...{Style.RESET_ALL}")
                 
                 # Enhanced connection parameters
+                                # Enhanced connection parameters
                 self.client = MongoClient(
                     MONGO_URL,
+                    tlsCAFile=certifi.where(),  # এটি আপনার SSL এরর সমাধান করবে
                     serverSelectionTimeoutMS=20000,
                     connectTimeoutMS=20000,
-                    socketTimeoutMS=30000,
-                    tlsCAFile=certifi.where(),
-                    retryWrites=True,
-                    retryReads=True
+                    retryWrites=True
                 )
+
                 
                 # Test connection
                 self.client.server_info()
