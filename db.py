@@ -23,7 +23,7 @@ class Database:
             max_retries: Maximum connection attempts
             retry_delay: Delay between retries in seconds
         """
-        self._print_startup_message()
+        self._print_startup_message)
         self.client: Optional[MongoClient] = None
         self.db: Optional[MongoDatabase] = None
         self.users: Optional[Collection] = None
@@ -33,31 +33,38 @@ class Database:
         
     def _connect_with_retry(self, max_retries: int, retry_delay: float):
         """Establish MongoDB connection with retry mechanism"""
-        for attempt in range(1, max_retries + 1):
+                for attempt in range(1, max_retries + 1):
             try:
-                print(f"{Fore.YELLOW}⌛ Attempt {attempt}/{max_retries}: Connecting to MongoDB...{Style.RESET_ALL}")
+                print(f"Attempt {attempt}/{max_retries}: Connecting to MongoDB...")
+
+                # Enhanced connection parameters
+                self.client = MongoClient(
+                    MONGO_URL,
+                    serverSelectionTimeoutMS=20000,
+                    connectTimeoutMS=20000,
+                    socketTimeoutMS=30000,
+                    tlsCAFile=certifi.where(),
+                    retryWrites=True,
+                    retryReads=True
+                )
                 
-                                # Enhanced connection parameters
-                        try:
-            self.client = MongoClient(
-                MONGO_URL,
-                serverSelectionTimeoutMS=20000,
-                connectTimeoutMS=20000,
-                socketTimeoutMS=30000,
-                tlsCAFile=certifi.where(),
-                retryWrites=True,
-                retryReads=True
-            )
-            self.client.server_info() # কানেকশন টেস্ট করার জন্য
-        except Exception as e:
-            print(f"MongoDB Connection Failed: {e}")
-            raise e
-            
-            # Test connection
-            self.client.server_info()
-        except Exception as e:
-            print(f"Connection failed: {e}")
-            raise e
+                # Test connection
+                self.client.server_info()
+                
+                self.db = self.client.get_database('ITSGOLU_db')
+                self.users = self.db['users']
+                self.settings = self.db['user_settings']
+                
+                print("MongoDB Connected Successfully!")
+                self._initialize_database()
+                return
+
+            except Exception as e:
+                print(f"Connection attempt {attempt} failed: {e}")
+                if attempt < max_retries:
+                    time.sleep(retry_delay)
+                else:
+                    raise e
 
 
 
