@@ -17,7 +17,7 @@ from subprocess import getstatusoutput
 # 🕒 Timezone
 import pytz
 
-# --- 🟢 Flask Keep Alive Code (সংশোধিত নাম: web_server) ---
+# --- 🟢 Flask Keep Alive Code (Render-এর জন্য) ---
 from flask import Flask
 from threading import Thread
 
@@ -28,6 +28,7 @@ def home():
     return "Bot is alive!"
 
 def run():
+    # Render-এর জন্য ডাইনামিক পোর্ট সেটআপ
     port = int(os.environ.get("PORT", 8080))
     web_server.run(host='0.0.0.0', port=port)
 
@@ -62,35 +63,43 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InputMediaPhoto
 )
-# ... অন্যান্য ইম্পোর্ট ...
+# ... অন্যান্য প্রয়োজনীয় Pyrogram ইম্পোর্টসমূহ
 
 # 🧠 Bot Modules
 import auth
 import nath as helper
 from html_handler import html_handler
 from nath import *
+from clean import register_clean_handler
+from logs import logging
+from utils import progress_bar
 from vars import *
 
-# 🤖 Pyrogram Client Setup (এটি আপনার কোডে অবশ্যই থাকতে হবে)
-# এখানে vars.py থেকে ভেরিয়েবলগুলো অটোমেটিক আসবে অথবা ম্যানুয়ালি বসান
+# Pyromod fix
+import pyromod
+from db import db
+
+# 🤖 Pyrogram Client Setup
+# আপনার দেওয়া তথ্যগুলো সরাসরি যুক্ত করা হলো যাতে NameError না আসে
 app = Client(
-    "Bot-1",
-    api_id=API_ID, 
-    api_hash=API_HASH, 
-    bot_token=BOT_TOKEN
+    "MyPrivateBot",
+    api_id=24670806,
+    api_hash="82134723a32b2cae76b9cfb3b1570745",
+    bot_token="8479840767:AAGU9pgJvC1iTQKXOKeMBPuuQgnLmoqRi9I"
 )
 
-# 🛑 Stop Command (অ্যাডমিনের জন্য)
-@app.on_message(filters.command("stop") & filters.user(7110188686))
+# 🛑 স্টপ কমান্ড (আপনার ইউজার আইডি ৮২২৯২২৮৬১৬ দিয়ে সেট করা)
+@app.on_message(filters.command("stop") & filters.user(8229228616))
 async def stop_bot(client, message):
     await message.reply_text("**বোটটি সফলভাবে বন্ধ করা হয়েছে।** 🛑")
     os._exit(0)
 
-# 🚀 Bot Start [সংশোধিত এবং চূড়ান্ত অংশ]
+# 🚀 Bot Start [সংশোধিত অংশ]
 if __name__ == "__main__":
     print("Starting Keep Alive Web Server...")
     keep_alive() #
     
-    print("Starting Pyrogram Bot...")
-    # এখানে 'app.run()' এর শেষে কোনো বাড়তি অক্ষর রাখবেন না
+    print("Starting @MyMyMyMyisnothingbhaibot...")
+    # এখানে 'app' ব্যবহার করা হয়েছে যাতে NameError না আসে
+    # নিশ্চিত করুন শেষে কোনো বাড়তি অক্ষর নেই
     app.run() 
