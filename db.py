@@ -23,7 +23,7 @@ class Database:
             max_retries: Maximum connection attempts
             retry_delay: Delay between retries in seconds
         """
-        self._print_startup_message)
+        self._print_startup_message()
         self.client: Optional[MongoClient] = None
         self.db: Optional[MongoDatabase] = None
         self.users: Optional[Collection] = None
