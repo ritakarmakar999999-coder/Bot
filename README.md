@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c60e2ad3-6e3f-4f03-b407-d6a7899dd51d" width="600" alt="NATH BOT BANNER">
+  <img src="https://github.com/user-attachments/assets/c60e2ad3-6e3f-4f03-b407-d6a7899dd51d" width="100%" alt="NATH BOT BANNER">
 </p>
 
 <h1 align="center">🤖 @MyMyMyMyisnothingbhaibot</h1>
