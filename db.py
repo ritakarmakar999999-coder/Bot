@@ -5,7 +5,6 @@ from pymongo import MongoClient, errors
 from pymongo.database import Database as MongoDatabase
 from pymongo.collection import Collection
 from vars import *
-MONGO_URL = os.environ.get("MONGO_URL")
 import colorama
 from colorama import Fore, Style
 import time
@@ -79,16 +78,9 @@ class Database:
         user = self.users.find_one({"user_id": user_id, "bot_username": bot_username})
         if not user or 'expiry_date' not in user:
             return False
+        
         expiry = user['expiry_date']
         if isinstance(expiry, str):
-            
-# ☁ Final Initialization
-try:
-    db = Database()
-except Exception as e:
-    print(f"Fatal Error: {e}")
-    raise
-    
             expiry = datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S")
         return expiry > datetime.now()
 
@@ -136,3 +128,9 @@ except Exception as e:
         if self.client:
             self.client.close()
 
+# ☁ Final Initialization
+try:
+    db = Database()
+except Exception as e:
+    print(f"Fatal Error: {e}")
+    raise
