@@ -119,13 +119,12 @@ class Database:
         if isinstance(expiry, str): expiry = datetime.strptime(expiry, "%Y-%m-%d %H:%M:%S")
         return {"name": user.get('name'), "expiry_date": expiry.strftime("%d-%m-%Y"), "is_active": expiry > datetime.now()}
 
+    def is_admin(self, user_id: int) -> bool:
+        """Check if user is owner or admin"""
+        return user_id == OWNER_ID or user_id in ADMINS
+
     def close(self):
         """Close connection"""
-        if self.client: self.client.close()
+        if self.client:
+            self.client.close()
 
-# 🔌 Final Initialization
-try:
-    db = Database()
-except Exception as e:
-    print(f"{Fore.RED}Fatal Error: {e}{Style.RESET_ALL}")
-    raise
