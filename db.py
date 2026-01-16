@@ -1,19 +1,22 @@
 import os
+import time
+import certifi
+import colorama
 from datetime import datetime, timedelta
 from typing import Optional, Dict, List, Union
 from pymongo import MongoClient, errors
 from pymongo.database import Database as MongoDatabase
 from pymongo.collection import Collection
-from vars import *
-import colorama
 from colorama import Fore, Style
-import time
-import certifi
-from typing_extensions import Literal
+from vars import *
 
-# Init colors for Windows
-colorama.init()
+# 🌍 Load Environment Variables
+# 🌍 Load Environment Variables
+MONGO_URL = os.environ.get("MONGO_URL")
+if not MONGO_URL:
+    raise ValueError("❌ MONGO_URL not found in Render Environment Variables!")
 
+    
 class Database:
     def __init__(self, max_retries: int = 3, retry_delay: float = 2.0):
         """Initialize MongoDB connection with retry logic"""
