@@ -1,24 +1,18 @@
 import os
-from os import environ
 
-# 🛰️ API Configuration - Render-এর Environment থেকে আসবে
-API_ID = int(os.environ.get("API_ID"))
-API_HASH = os.environ.get("API_HASH")
-BOT_TOKEN = os.environ.get("BOT_TOKEN")
+# 🛰️ API Configuration
+API_ID = int(os.environ.get("API_ID", 24670806))
+API_HASH = os.environ.get("API_HASH", "82134723a32b2cae76b9cfb3b1570745")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8479840767:AAGU9pgJvC1iTQKXOKeMBPuuQgnLmoqRi9I")
 
-# 🍃 MongoDB Configuration
-DATABASE_URL = os.environ.get("DATABASE_URL")
+# 🍃 MongoDB Configuration (আপনার দেওয়া URL সরাসরি এখানে বসানো হয়েছে)
+DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Admin:Golu1234@cluster0.bcz3n2q.mongodb.net/?appName=Cluster0")
 MONGO_URL = DATABASE_URL
 
 # 👑 Owner and Admin Configuration
-# আপনার টেলিগ্রাম আইডি Render-এ OWNER_ID হিসেবে দিতে হবে
-OWNER_ID = int(os.environ.get("OWNER_ID"))
-# অ্যাডমিন লিস্ট - ডিফল্ট হিসেবে মালিকের আইডি থাকবে
+OWNER_ID = int(os.environ.get("OWNER_ID", 8229228616))
+# অ্যাডমিন লিস্টে আপনার আইডি ডিফল্ট হিসেবে থাকবে
 ADMINS = [int(x) for x in os.environ.get("ADMINS", str(OWNER_ID)).split()]
-
-# 🌐 Web Server Configuration (Render-এর জন্য)
-WEB_SERVER = os.environ.get("WEB_SERVER", "False").lower() == "true"
-PORT = int(os.environ.get("PORT", 8080))
 
 # 🏷️ Bot Branding
 BOT_USERNAME = "@MyMyMyMyisnothingbhaibot"
