@@ -8,4 +8,6 @@ pytz
 motor
 aiohttp
 aiofiles
-request 
+requests
+beautifulsoup4
+asyncio
