@@ -70,8 +70,6 @@ from vars import *
 # Pyromod fix
 import pyromod
 
-pyromod.listen.Client.listen = pyromod.listen.listen
-
 from db import db
 
 auto_flags = {}
