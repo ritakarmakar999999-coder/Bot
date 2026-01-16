@@ -97,7 +97,7 @@ async def stop_bot(client, message):
 # 🚀 Bot Start [সংশোধিত অংশ]
 if __name__ == "__main__":
     print("Starting Keep Alive Web Server...")
-    keep_alive() #
+    keep_alive()
     
     print("Starting @MyMyMyMyisnothingbhaibot...")
     # এখানে 'app' ব্যবহার করা হয়েছে যাতে NameError না আসে
