@@ -17,20 +17,18 @@ from subprocess import getstatusoutput
 # 🕒 Timezone
 import pytz
 
-# --- 🟢 Flask Keep Alive Code (Render-এর জন্য) ---
+# --- 🟢 Flask Keep Alive Code (নতুন যুক্ত করা হয়েছে) ---
 from flask import Flask
 from threading import Thread
 
-web_server = Flask('')
+app = Flask('')
 
-@web_server.route('/')
+@app.route('/')
 def home():
     return "Bot is alive!"
 
 def run():
-    # Render-এর জন্য ডাইনামিক পোর্ট সেটআপ
-    port = int(os.environ.get("PORT", 8080))
-    web_server.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=8080)
 
 def keep_alive():
     t = Thread(target=run)
@@ -63,13 +61,25 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InputMediaPhoto
 )
-# ... অন্যান্য প্রয়োজনীয় Pyrogram ইম্পোর্টসমূহ
+from pyrogram.errors import (
+    FloodWait,
+    BadRequest,
+    Unauthorized,
+    SessionExpired,
+    AuthKeyDuplicated,
+    AuthKeyUnregistered,
+    ChatAdminRequired,
+    PeerIdInvalid,
+    RPCError
+)
+from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
 
-# 🧠 Bot Modules
+# 🧠 Bot Modules (সংশোধিত: itsgolu এর বদলে nath)
 import auth
 import nath as helper
 from html_handler import html_handler
 from nath import *
+
 from clean import register_clean_handler
 from logs import logging
 from utils import progress_bar
@@ -79,54 +89,8 @@ from vars import *
 import pyromod
 from db import db
 
-# 🤖 Pyrogram Client Setup
-# আপনার দেওয়া তথ্যগুলো সরাসরি যুক্ত করা হলো যাতে NameError না আসে
-app = Client(
-    "MyPrivateBot",
-    api_id=24670806,
-    api_hash="82134723a32b2cae76b9cfb3b1570745",
-    bot_token="8479840767:AAGU9pgJvC1iTQKXOKeMBPuuQgnLmoqRi9I"
-)
-
-# 🛑 স্টপ কমান্ড (আপনার ইউজার আইডি ৮২২৯২২৮৬১৬ দিয়ে সেট করা)
-@app.on_message(filters.command("stop") & filters.user(8229228616))
-async def stop_bot(client, message):
-    await message.reply_text("**বোটটি সফলভাবে বন্ধ করা হয়েছে।** 🛑")
-    os._exit(0)
-
-# 🚀 Bot Start [সংশোধিত অংশ]
+# 🚀 Bot Start Section
 if __name__ == "__main__":
-    print("Starting Keep Alive Web Server...")
-    keep_alive()
-    print("Starting @MyMyMyMyisnothingbhaibot...")
-    # এখানে 'app' ব্যবহার করা হয়েছে যাতে NameError না আসে
-    # নিশ্চিত করুন শেষে কোনো বাড়তি অক্ষর নেই
-    app.run() 
-    # ... (ইম্পোর্টগুলো আগের মতোই থাকবে) ...
-
-# 🤖 Pyrogram Client Setup
-app = Client(
-    "MyPrivateBot",
-    api_id=24670806,
-    api_hash="82134723a32b2cae76b9cfb3b1570745",
-    bot_token="8479840767:AAGU9pgJvC1iTQKXOKeMBPuuQgnLmoqRi9I",
-    plugins=dict(root="plugins") # যদি আপনার সব কমান্ড 'plugins' ফোল্ডারে থাকে
-)
-
-# অথবা যদি কমান্ডগুলো সরাসরি অন্য ফাইল থেকে আসে:
-# register_handlers(app) # আপনার বোটের ধরন অনুযায়ী এটি প্রয়োজন হতে পারে
-
-# 🛑 স্টপ কমান্ড (আপনার আইডি ৮২২৯২২৮৬১৬)
-@app.on_message(filters.command("stop") & filters.user(8229228616))
-async def stop_bot(client, message):
-    await message.reply_text("**বোটটি সফলভাবে বন্ধ করা হয়েছে।** 🛑")
-    os._exit(0)
-
-# 🚀 Bot Start
-if __name__ == "__main__":
-    print("Starting Keep Alive Web Server...")
-    keep_alive() # নিশ্চিত করুন এখানে বাড়তি কোনো অক্ষর নেই
-    
-    print("Starting @MyMyMyMyisnothingbhaibot...")
-    app.run() 
-    
+    keep_alive() # Flask সার্ভার চালু হবে যাতে Render বট অফ না করে
+    print("🚀 Bot is starting...")
+    bot.run() # আপনার বট চালু হবে
