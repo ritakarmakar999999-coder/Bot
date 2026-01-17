@@ -2,7 +2,7 @@ import os
 from os import getenv
 
 # 🔐 API & Bot Credentials
-API_ID = int(getenv("API_ID", "0")) 
+API_ID = int(getenv("API_ID", "")) 
 API_HASH = getenv("API_HASH", "")
 BOT_TOKEN = getenv("BOT_TOKEN", "")
 
@@ -13,7 +13,8 @@ BOT_USERNAME = getenv("BOT_USERNAME", "MyMyMyMyisnothingbhaibot")
 MONGO_URL = getenv("MONGO_URL", "")
 
 # 👤 Admin & Sudo Users
-OWNER_ID = int(getenv("OWNER_ID", "123456789")) 
+OWNER_ID = int(getenv("OWNER_ID", "")) 
 
 # 📁 Extra Settings
 START_PIC = getenv("START_PIC", "https://telegra.ph/file/default.jpg")
+
